@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nguyen Ngoc Quynh Chi | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #ffffff; color: #001D3D; }
+        .text-huge { font-size: clamp(3rem, 10vw, 8rem); line-height: 0.9; letter-spacing: -0.04em; font-weight: 800; }
+        .orange-primary { color: #FF6B00; }
+        .orange-bg { background-color: #FF6B00; }
+        .blue-primary { color: #003566; }
+        .blue-bg { background-color: #003566; }
+
+        /* Overlay backdrop */
+        .case-overlay {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            background: rgba(0, 21, 61, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .case-overlay.active { opacity: 1; visibility: visible; }
+
+        /* Modal box */
+        .case-box {
+            background: #fff;
+            border-radius: 2.5rem;
+            border: 4px solid #003566;
+            box-shadow: 0 32px 80px rgba(0,0,0,0.22);
+            width: calc(100% - 2rem);
+            max-width: 1160px;
+            max-height: 88vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: translateY(60px) scale(0.97);
+            transition: transform 0.5s cubic-bezier(0.19,1,0.22,1);
+        }
+        .case-overlay.active .case-box { transform: translateY(0) scale(1); }
+
+        .project-card { transition: all 0.4s ease; border: 2px solid #f3f4f6; }
+        .project-card:hover { border-color: #FF6B00; transform: translateY(-8px); }
+        .contact-item:hover { color: #FF6B00; text-decoration: underline; }
+
+        /* Horizontal scroll slider */
+        .img-slider-track {
+            display: flex;
+            gap: 1.25rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding-bottom: 4px;
+            cursor: grab;
+            user-select: none;
+        }
+        .img-slider-track:active { cursor: grabbing; }
+        .img-slider-track::-webkit-scrollbar { display: none; }
+        .img-slide {
+            flex: 0 0 auto;
+            width: 520px;
+            aspect-ratio: 16/10;
+            border-radius: 1.25rem;
+            overflow: hidden;
+            scroll-snap-align: start;
+            border: 2px solid #f3f4f6;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.09);
+            background: #f8fafc;
+            cursor: pointer;
+        }
+        @media(max-width:768px){ .img-slide { width: 78vw; } }
+        .img-slide img {
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: top;
+            transition: transform 0.7s ease;
+            pointer-events: none;
+        }
+        .img-slide:hover img { transform: scale(1.04); }
+
+        /* Dots */
+        .slider-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: #d1d5db; transition: all 0.3s ease; cursor: pointer; flex-shrink: 0;
+        }
+        .slider-dot.active { background: #FF6B00; width: 24px; border-radius: 4px; }
+
+        /* Lightbox */
+        .lightbox {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.90); z-index: 9999;
+            align-items: center; justify-content: center;
+        }
+        .lightbox.open { display: flex; }
+        .lightbox img { max-width: 92vw; max-height: 90vh; border-radius: 1rem; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+
+        /* Cert / award thumbnails */
+        .cert-thumb {
+            width: 68px; height: 68px; border-radius: 0.75rem;
+            object-fit: cover; border: 2px solid rgba(255,255,255,0.2);
+            flex-shrink: 0; cursor: pointer;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .cert-thumb:hover { transform: scale(1.1); border-color: #FF6B00; }
+        .award-thumb {
+            width: 68px; height: 68px; border-radius: 0.75rem;
+            object-fit: cover; border: 2px solid #e5e7eb;
+            flex-shrink: 0; cursor: pointer;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .award-thumb:hover { transform: scale(1.1); border-color: #FF6B00; }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- NAV -->
+    <nav class="w-full py-10 px-6 md:px-16 flex flex-col md:flex-row justify-between items-start md:items-center border-b-4 border-blue-900">
+        <div class="mb-6 md:mb-0">
+            <h1 class="text-3xl font-black tracking-tighter blue-primary">QUYNH CHI<span class="orange-primary">.</span></h1>
+            <p class="text-sm font-bold uppercase tracking-[0.3em] orange-primary">BA Intern</p>
+        </div>
+        <div class="flex flex-col md:flex-row gap-6 md:gap-12 text-sm font-extrabold uppercase tracking-widest italic">
+            <a href="https://www.linkedin.com/in/chinnq-733395337/" target="_blank" class="contact-item">LinkedIn</a>
+            <a href="mailto:chinnq23416@st.uel.edu.vn" class="contact-item">chinnq23416@st.uel.edu.vn</a>
+            <a href="tel:+84937307549" class="contact-item">+84 937 307 549</a>
+        </div>
+    </nav>
+
+    <!-- ABOUT -->
+    <section id="about" class="py-20 px-6 md:px-16">
+        <div class="max-w-screen-2xl mx-auto grid lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-8">
+                <h2 class="text-huge blue-primary uppercase">About<span class="orange-primary italic">.</span></h2>
+                <p class="mt-10 text-xl md:text-2xl font-semibold leading-relaxed text-gray-700">
+                    I'm a <span class="orange-primary font-extrabold">Digital Business & AI</span> student at UEL, specializing in <span class="blue-primary font-extrabold">Business Analysis</span> and Product Management. I work at the intersection of technology and business, translating complex requirements into structured systems, modeling processes, and turning data into decisions that actually move things forward.
+                </p>
+            </div>
+            <div class="lg:col-span-4">
+                <div class="relative group">
+                    <div class="absolute -inset-4 orange-bg rounded-2xl rotate-3 group-hover:rotate-0 transition-transform"></div>
+                    <img src="Avatar.jpg" alt="Quynh Chi" class="relative rounded-2xl w-full shadow-2xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section class="py-20 px-6 md:px-16 bg-blue-900 text-white">
+        <div class="max-w-screen-2xl mx-auto flex flex-col md:flex-row justify-between items-end gap-10">
+            <div>
+                <h2 class="text-6xl font-black uppercase tracking-tighter mb-4 italic">Education</h2>
+                <p class="text-2xl font-bold orange-primary uppercase tracking-widest">University of Economics and Law</p>
+                <p class="text-xl font-medium mt-2">Bachelor of Digital Business and Artificial Intelligence | 2023 - 2027</p>
+            </div>
+            <div class="text-right">
+                <span class="text-8xl font-black orange-primary">8.99</span>
+                <p class="text-sm font-bold uppercase tracking-[0.5em]">Cumulative GPA</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="py-32 px-6 md:px-16">
+        <div class="max-w-screen-2xl mx-auto">
+            <div class="flex justify-between items-center mb-20">
+                <h2 class="text-7xl font-black blue-primary uppercase tracking-tighter">Projects<span class="orange-primary italic">&</span><br>Publications</h2>
+                <div class="hidden md:block w-32 h-32 orange-bg rounded-full animate-bounce"></div>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div onclick="openCase('competency')" class="project-card p-10 rounded-[3rem] cursor-pointer group bg-slate-50 flex flex-col justify-between min-h-[450px]">
+                    <div>
+                        <div class="w-16 h-2 orange-bg mb-8"></div>
+                        <h3 class="text-4xl font-black leading-none blue-primary uppercase">Competency<br>Management</h3>
+                        <p class="text-gray-500 mt-6 font-semibold">Transforming HR resource allocation through data modeling.</p>
+                    </div>
+                    <i data-lucide="arrow-right" class="w-12 h-12 orange-primary group-hover:translate-x-4 transition-transform"></i>
+                </div>
+                <div onclick="openCase('mealmatch')" class="project-card p-10 rounded-[3rem] cursor-pointer group bg-slate-50 flex flex-col justify-between min-h-[450px]">
+                    <div>
+                        <div class="w-16 h-2 blue-bg mb-8"></div>
+                        <h3 class="text-4xl font-black leading-none orange-primary uppercase">MealMatch<br>App</h3>
+                        <p class="text-gray-500 mt-6 font-semibold">Product planning for a personalized restaurant discovery experience.</p>
+                    </div>
+                    <i data-lucide="arrow-right" class="w-12 h-12 blue-primary group-hover:translate-x-4 transition-transform"></i>
+                </div>
+                <div onclick="openCase('paper')" class="project-card p-10 rounded-[3rem] cursor-pointer group bg-gray-900 flex flex-col justify-between min-h-[450px]">
+                    <div>
+                        <div class="w-16 h-2 orange-bg mb-8"></div>
+                        <h3 class="text-4xl font-black leading-none text-white italic">Retail Price<br>Prediction</h3>
+                        <p class="text-gray-400 mt-6 font-semibold">Accepted Paper - ICCAE 2026. Interpretable ML with SHAP.</p>
+                    </div>
+                    <i data-lucide="book-open" class="w-12 h-12 text-blue-400 group-hover:rotate-12 transition-transform"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACHIEVEMENTS -->
+    <section id="achievements" class="py-32 px-6 md:px-16 bg-slate-50">
+        <div class="max-w-screen-2xl mx-auto">
+            <h2 class="text-6xl font-black blue-primary uppercase tracking-tighter mb-20 italic">Achievements</h2>
+            <div class="grid lg:grid-cols-2 gap-20">
+                <div class="space-y-10">
+                    <div class="flex gap-6 border-b-2 border-gray-200 pb-8 items-start">
+                        <span class="text-4xl font-black orange-primary tracking-tighter shrink-0">01.</span>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-2xl font-bold uppercase">Top 10 - AI in Business Season 2</h4>
+                            <p class="text-gray-500 mt-2">Built an AI Agent solution for Marketing & E-commerce using NocoAI platform.</p>
+                        </div>
+                        <img src="TOP10_AiB2.png" class="award-thumb" onclick="event.stopPropagation(); openLight('TOP10_AiB2.png')" alt="AI in Business cert">
+                    </div>
+                    <div class="flex gap-6 border-b-2 border-gray-200 pb-8 items-start">
+                        <span class="text-4xl font-black orange-primary tracking-tighter shrink-0">02.</span>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-2xl font-bold uppercase">Top 10 - Attacker Competition</h4>
+                            <p class="text-gray-500 mt-2">Tech startup idea across AI, Blockchain, and Tech Ethics.</p>
+                        </div>
+                        <img src="Top10_Attacker(1).jpg" class="award-thumb" onclick="event.stopPropagation(); openLight('Top10_Attacker(1).jpg')" alt="Attacker cert">
+                    </div>
+                    <div class="flex gap-6 border-b-2 border-gray-200 pb-8 items-start">
+                        <span class="text-4xl font-black orange-primary tracking-tighter shrink-0">03.</span>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-2xl font-bold uppercase">Top 30 - H4TF Product Management</h4>
+                            <p class="text-gray-500 mt-2">Product analysis and strategy formulation for SAPO platform.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-blue-900 rounded-[3rem] p-12 text-white flex flex-col justify-center">
+                    <h3 class="text-2xl font-black uppercase mb-10 orange-primary italic">Certifications</h3>
+                    <ul class="space-y-8">
+                        <li class="flex items-center gap-5 cursor-pointer" onclick="openLight('Google Data Analytics.png')">
+                            <img src="Google Data Analytics.png" alt="Google Data Analytics" class="cert-thumb">
+                            <div>
+                                <p class="text-xl font-bold">Google Data Analytics</p>
+                                <p class="text-sm text-blue-300 font-semibold uppercase tracking-wider mt-1">Google Certificate</p>
+                            </div>
+                        </li>
+                        <li class="flex items-center gap-5 cursor-pointer" onclick="openLight('GoogleDigitalMarketing_Ecommerce.png')">
+                            <img src="GoogleDigitalMarketing_Ecommerce.png" alt="Google Digital Marketing" class="cert-thumb">
+                            <div>
+                                <p class="text-xl font-bold">Google Digital Marketing & E-commerce</p>
+                                <p class="text-sm text-blue-300 font-semibold uppercase tracking-wider mt-1">Google Certificate</p>
+                            </div>
+                        </li>
+                        <li class="flex items-center gap-5 cursor-pointer" onclick="openLight('Udemy_L01.jpg')">
+                            <img src="Udemy_L01.jpg" alt="SAP S/4HANA" class="cert-thumb">
+                            <div>
+                                <p class="text-xl font-bold">SAP S/4HANA for Beginners</p>
+                                <p class="text-sm text-blue-300 font-semibold uppercase tracking-wider mt-1">Udemy Certificate</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CASE STUDY OVERLAY MODAL -->
+    <div id="caseModal" class="case-overlay fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
+        <!-- Backdrop click to close -->
+        <div class="absolute inset-0" onclick="closeCase()"></div>
+        <!-- Modal box -->
+        <div class="case-box relative z-10">
+            <!-- Top bar -->
+            <div class="shrink-0 px-8 md:px-12 py-5 border-b-4 border-blue-900 flex items-center justify-between">
+                <span id="caseRole" class="text-xs font-black uppercase tracking-[0.3em] text-gray-400"></span>
+                <button onclick="closeCase()" class="bg-blue-900 text-white rounded-full p-3 hover:rotate-90 transition-transform duration-300">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <!-- Scrollable content -->
+            <div class="flex-1 overflow-y-auto px-8 md:px-14 py-12" id="caseBody"></div>
+            <!-- Bottom bar -->
+            <div class="shrink-0 px-8 md:px-12 py-5 border-t-4 border-blue-900 flex items-center justify-between">
+                <button onclick="closeCase()" class="flex items-center gap-2 text-sm font-black uppercase tracking-widest blue-primary hover:text-orange-500 transition-colors">
+                    <i data-lucide="chevron-left" class="w-5 h-5"></i> Back to Projects
+                </button>
+                <span class="text-sm font-black uppercase tracking-widest text-gray-400">Case Study</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" class="lightbox" onclick="closeLight()">
+        <img id="lightboxImg" src="" alt="">
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        const projects = {
+            competency: {
+                title: "Competency Management & Resource Allocation System",
+                role: "Main Business Analyst / Project Manager",
+                overview: "A system analysis and design project focused on helping project-based companies manage employee competencies and allocate resources more effectively. Addresses the lack of visibility into who knows what, and who's already overloaded.",
+                outcome: "Improved competency visibility and employee skill tracking. More effective resource allocation based on skills and workload. Early overload detection through monitoring and alerts.",
+                deliverables: ["Wireframes", "BPMN", "DFD", "UCD", "Sequence Diagrams"],
+                workflow: "Competency Update  →  Project Requirement Setup  →  Matching & Recommendation  →  Approval & Confirmation  →  Performance & Overload Monitoring",
+                workflowDetail: [
+                    "Competency Update: HR initializes competency periods and employees' skill profiles are updated through evaluation.",
+                    "Project Requirement Setup: PMs define project information, required skills, levels, workload, and priority.",
+                    "Matching & Recommendation: The system matches employee competencies with project requirements and current workload.",
+                    "Approval & Confirmation: Line Managers review suggested allocations; employees confirm participation.",
+                    "Performance & Overload Monitoring: The system periodically monitors workload and sends alerts when overload risks are detected."
+                ],
+                visuals: [
+                    { src: "Figma_CM/Dashboard QLDA (D1).png",                           label: "Dashboard QLDA (D1)" },
+                    { src: "Figma_CM/Chi tiết dự án (D2).png",                           label: "Chi tiết dự án (D2)" },
+                    { src: "Figma_CM/Form tạo dự án (D3).png",                           label: "Form tạo dự án (D3)" },
+                    { src: "Figma_CM/Form yêu cầu phân bổ nguồn lực (D5).png",          label: "Form yêu cầu phân bổ (D5)" },
+                    { src: "Figma_CM/Danh sách yêu cầu phân bổ nguồn lực (D6).png",     label: "Yêu cầu phân bổ nguồn lực (D6)" },
+                    { src: "Figma_CM/Danh sách nhân viên cần đánh giá (D9).png",         label: "Nhân viên cần đánh giá (D9)" },
+                    { src: "Figma_CM/Đánh giá năng lực nhân viên (D10).png",             label: "Đánh giá năng lực (D10)" },
+                    { src: "Figma_CM/Thông tin danh mục và thang đo chi tiết (D11).png", label: "Danh mục & thang đo (D11)" },
+                    { src: "Figma_CM/Skill gap dự án (D12+D13).png",                     label: "Skill gap dự án (D12+D13)" },
+                    { src: "Figma_CM/Danh sách Hiring request (D14+D15).png",            label: "Hiring Request (D14+D15)" },
+                ]
+            },
+            mealmatch: {
+                title: "MealMatch - Personal Food Journal & Restaurant Discovery App",
+                role: "Product Manager / Business Analyst",
+                overview: "A local restaurant and food discovery app where users can explore nearby places, log personal dining experiences, and get recommendations based on their own history. The core system supports full CRUD operations on restaurants, food items, and user reviews.",
+                outcome: "Validated product-market fit through persona mapping and agile iterations. High-fidelity prototype with smooth UX flows.",
+                deliverables: ["Product Vision & Backlog", "Agile/Scrum Roadmap", "User Flows & Navigation Map", "Hi-fi Figma Prototypes", "BPMN Process Modeling"],
+                workflow: "Browse Local Restaurants & Food  →  Add / Edit / Delete Review  →  Log Food Journal  →  Receive Personalized Recommendations",
+                workflowDetail: [
+                    "Browse Local Restaurants & Food: Users discover nearby places and menu items; admins can add, update, or remove restaurant and food data.",
+                    "Add / Edit / Delete Review: Users submit ratings and written reviews for restaurants and dishes, and can manage their own review history.",
+                    "Log Food Journal: Personal diary of meals eaten, saved with date, location, and notes.",
+                    "Receive Personalized Recommendations: System suggests restaurants and foods based on past reviews, logged meals, and stated preferences."
+                ],
+                visuals: [
+                    { src: "MealMatch1.png",   label: "MealMatch Screen 1" },
+                    { src: "MealMatch2.png",   label: "MealMatch Screen 2" },
+                    { src: "MealMatch3.png",   label: "MealMatch Screen 3" },
+                    { src: "BPMN_MM_1.png",    label: "BPMN Flow 1" },
+                    { src: "BPMN_MM_2.png",    label: "BPMN Flow 2" },
+                    { src: "BPMN_MM_3.png",    label: "BPMN Flow 3" },
+                ]
+            },
+            paper: {
+                title: "Retail Price Prediction Exploiting Competitive Boundaries using Interpretable Machine Learning with SHAP-Based Explanations",
+                role: "Research",
+                overview: "Academic research on how competition shapes retail pricing, studying the effect of competitor presence, price ceilings, price floors, and historical price trends on predicting optimal retail prices using interpretable Machine Learning.",
+                outcome: "Random Forest model outperformed linear baselines. High stability and accuracy in predictive analysis. SHAP values reveal which competitive factors drive price movements most, giving analysts a clear, explainable view of market dynamics.",
+                venue: "International Conference on Computer and Automation Engineering (ICCAE) 2026",
+                status: "Accepted Paper",
+                ba_value: "Builds real market intelligence skills: understanding how competition influences price, where price floors and ceilings apply, and how prior price periods carry forward. Turns raw data into pricing strategy, a core BA skill for retail and e-commerce domains."
+            }
+        };
+
+        /* ---- Drag scroll ---- */
+        function initDragScroll(el) {
+            if (!el) return;
+            let isDown = false, startX, scrollLeft, moved = false;
+            el.addEventListener('mousedown', e => {
+                isDown = true; moved = false; el.style.cursor = 'grabbing';
+                startX = e.pageX - el.offsetLeft; scrollLeft = el.scrollLeft;
+            });
+            el.addEventListener('mouseleave', () => { isDown = false; el.style.cursor = 'grab'; });
+            el.addEventListener('mouseup', () => { isDown = false; el.style.cursor = 'grab'; });
+            el.addEventListener('mousemove', e => {
+                if (!isDown) return; e.preventDefault(); moved = true;
+                el.scrollLeft = scrollLeft - (e.pageX - el.offsetLeft - startX) * 1.2;
+            });
+            // prevent click-to-lightbox when dragging
+            el.addEventListener('click', e => { if (moved) e.stopPropagation(); }, true);
+        }
+
+        /* ---- Dot sync ---- */
+        function initDots(trackEl, dotsEl, count) {
+            if (!trackEl || !dotsEl) return;
+            const dots = dotsEl.querySelectorAll('.slider-dot');
+            const update = () => {
+                const slideW = trackEl.scrollWidth / count;
+                const idx = Math.min(count - 1, Math.round(trackEl.scrollLeft / slideW));
+                dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+            };
+            trackEl.addEventListener('scroll', update, { passive: true });
+            dots.forEach((d, i) => d.addEventListener('click', () => {
+                trackEl.scrollTo({ left: (trackEl.scrollWidth / count) * i, behavior: 'smooth' });
+            }));
+            update();
+        }
+
+        /* ---- Open case ---- */
+        function openCase(id) {
+            const p = projects[id];
+            document.getElementById('caseRole').textContent = p.role || 'Research';
+
+            const rightCol = id === 'paper' ? `
+                <div class="bg-blue-900 p-10 rounded-[2rem] text-white">
+                    <p class="text-xs font-black text-orange-400 uppercase tracking-[0.3em] mb-6">Venue & Status</p>
+                    <p class="text-xl font-black italic mb-3">${p.venue}</p>
+                    <p class="text-sm font-bold text-blue-300 uppercase tracking-widest">${p.status}</p>
+                    <div class="mt-8 pt-8 border-t border-blue-700">
+                        <p class="text-xs font-black text-orange-400 uppercase tracking-[0.3em] mb-4">BA Relevance</p>
+                        <p class="text-base font-medium leading-relaxed">${p.ba_value}</p>
+                    </div>
+                </div>
+            ` : `
+                <div class="space-y-8">
+                    <div>
+                        <p class="text-xs font-black orange-primary uppercase tracking-[0.3em] mb-5">Key BA Deliverables</p>
+                        <ul class="space-y-3">
+                            ${p.deliverables.map(item => `
+                                <li class="flex items-center gap-3 text-lg font-extrabold blue-primary">
+                                    <i data-lucide="arrow-right-circle" class="w-5 h-5 shrink-0 text-orange-500"></i>${item}
+                                </li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="border-l-8 border-orange-500 pl-7 py-5 bg-slate-50 rounded-r-3xl">
+                        <p class="text-xs font-black blue-primary uppercase tracking-[0.3em] mb-4">System Workflow</p>
+                        <p class="text-xs font-black text-orange-500 uppercase tracking-wide mb-4 leading-relaxed">${p.workflow}</p>
+                        <ul class="space-y-2">
+                            ${p.workflowDetail.map(s => `<li class="text-sm font-semibold text-gray-700">${s}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+
+            const sliderHtml = p.visuals ? `
+                <div class="mt-16 pt-12 border-t-2 border-gray-100">
+                    <div class="flex items-center justify-between mb-6">
+                        <p class="text-xs font-black orange-primary uppercase tracking-[0.3em]">Pipeline & Output Visuals</p>
+                        <span class="text-xs text-gray-400 font-semibold italic">drag to scroll</span>
+                    </div>
+                    <div class="img-slider-track" id="slider-${id}">
+                        ${p.visuals.map(v => `
+                            <div class="img-slide" data-src="${v.src.replace(/"/g,'&quot;')}">
+                                <img src="${v.src}" alt="${v.label}" loading="lazy">
+                            </div>`).join('')}
+                    </div>
+                    <div class="flex items-center gap-2 mt-4" id="dots-${id}">
+                        ${p.visuals.map((_, i) => `<div class="slider-dot${i===0?' active':''}"></div>`).join('')}
+                    </div>
+                </div>
+            ` : '';
+
+            document.getElementById('caseBody').innerHTML = `
+                <h2 class="text-3xl md:text-4xl xl:text-5xl font-black blue-primary uppercase italic leading-tight mb-4">${p.title}</h2>
+                <div class="h-2 w-32 orange-bg mb-12"></div>
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <div class="space-y-10">
+                        <div>
+                            <p class="text-xs font-black orange-primary uppercase tracking-[0.3em] mb-4">Project Overview</p>
+                            <p class="text-lg font-bold text-gray-800 leading-relaxed">${p.overview}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs font-black orange-primary uppercase tracking-[0.3em] mb-4">Outcomes & Value</p>
+                            <p class="text-lg font-bold text-gray-800 leading-relaxed">${p.outcome}</p>
+                        </div>
+                    </div>
+                    <div>${rightCol}</div>
+                </div>
+                ${sliderHtml}
+            `;
+
+            const modal = document.getElementById('caseModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+
+            // Click on slide = lightbox (only if not dragging)
+            const track = document.getElementById(`slider-${id}`);
+            if (track) {
+                track.querySelectorAll('.img-slide').forEach(slide => {
+                    slide.addEventListener('click', () => openLight(slide.dataset.src));
+                });
+                // Init drag and dots AFTER the modal is visible (next frame)
+                setTimeout(() => {
+                    initDragScroll(track);
+                    initDots(track, document.getElementById(`dots-${id}`), p.visuals.length);
+                }, 60);
+            }
+        }
+
+        function closeCase() {
+            document.getElementById('caseModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function openLight(src) {
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lightbox').classList.add('open');
+        }
+        function closeLight() {
+            document.getElementById('lightbox').classList.remove('open');
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') { closeCase(); closeLight(); }
+        });
+    </script>
+</body>
+</html>
