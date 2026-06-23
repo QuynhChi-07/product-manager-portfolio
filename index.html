@@ -15,7 +15,6 @@
         .blue-primary { color: #003566; }
         .blue-bg { background-color: #003566; }
 
-        /* Overlay backdrop */
         .case-overlay {
             opacity: 0;
             visibility: hidden;
@@ -26,7 +25,6 @@
         }
         .case-overlay.active { opacity: 1; visibility: visible; }
 
-        /* Modal box */
         .case-box {
             background: #fff;
             border-radius: 2.5rem;
@@ -47,7 +45,6 @@
         .project-card:hover { border-color: #FF6B00; transform: translateY(-8px); }
         .contact-item:hover { color: #FF6B00; text-decoration: underline; }
 
-        /* Horizontal scroll slider */
         .img-slider-track {
             display: flex;
             gap: 1.25rem;
@@ -82,14 +79,12 @@
         }
         .img-slide:hover img { transform: scale(1.04); }
 
-        /* Dots */
         .slider-dot {
             width: 8px; height: 8px; border-radius: 50%;
             background: #d1d5db; transition: all 0.3s ease; cursor: pointer; flex-shrink: 0;
         }
         .slider-dot.active { background: #FF6B00; width: 24px; border-radius: 4px; }
 
-        /* Lightbox */
         .lightbox {
             display: none; position: fixed; inset: 0;
             background: rgba(0,0,0,0.90); z-index: 9999;
@@ -98,7 +93,6 @@
         .lightbox.open { display: flex; }
         .lightbox img { max-width: 92vw; max-height: 90vh; border-radius: 1rem; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
 
-        /* Cert / award thumbnails */
         .cert-thumb {
             width: 68px; height: 68px; border-radius: 0.75rem;
             object-fit: cover; border: 2px solid rgba(255,255,255,0.2);
@@ -121,11 +115,11 @@
     <nav class="w-full py-10 px-6 md:px-16 flex flex-col md:flex-row justify-between items-start md:items-center border-b-4 border-blue-900">
         <div class="mb-6 md:mb-0">
             <h1 class="text-3xl font-black tracking-tighter blue-primary">QUYNH CHI<span class="orange-primary">.</span></h1>
-            <p class="text-sm font-bold uppercase tracking-[0.3em] orange-primary">BA Intern</p>
+            <p class="text-sm font-bold uppercase tracking-[0.3em] orange-primary">Product Owner Intern</p>
         </div>
         <div class="flex flex-col md:flex-row gap-6 md:gap-12 text-sm font-extrabold uppercase tracking-widest italic">
             <a href="https://www.linkedin.com/in/chinnq-733395337/" target="_blank" class="contact-item">LinkedIn</a>
-            <a href="mailto:qchinguyen.work@gmail.com" class="contact-item">chinnq23416@st.uel.edu.vn</a>
+            <a href="mailto:qchinguyen.work@gmail.com" class="contact-item">qchinguyen.work@gmail.com</a>
             <a href="tel:+84937307549" class="contact-item">+84 937 307 549</a>
         </div>
     </nav>
@@ -136,7 +130,7 @@
             <div class="lg:col-span-8">
                 <h2 class="text-huge blue-primary uppercase">About<span class="orange-primary italic">.</span></h2>
                 <p class="mt-10 text-xl md:text-2xl font-semibold leading-relaxed text-gray-700">
-                    I'm a <span class="orange-primary font-extrabold">Digital Business & AI</span> student at UEL, specializing in <span class="blue-primary font-extrabold">Business Analysis</span> and Product Management. I work at the intersection of technology and business, translating complex requirements into structured systems, modeling processes, and turning data into decisions that actually move things forward.
+                    I'm a <span class="orange-primary font-extrabold">Digital Business & AI</span> student at UEL, specializing in Product Owner. I work at the intersection of technology and business, translating complex requirements into structured systems, modeling processes, and turning data into decisions that actually move things forward.
                 </p>
             </div>
             <div class="lg:col-span-4">
@@ -171,6 +165,28 @@
                 <div class="hidden md:block w-32 h-32 orange-bg rounded-full animate-bounce"></div>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- RENGA -->
+                <div onclick="openCase('renga')" class="project-card p-10 rounded-[3rem] cursor-pointer group bg-slate-50 flex flex-col justify-between min-h-[450px]">
+                    <div>
+                        <div class="w-16 h-2 orange-bg mb-8"></div>
+                        <h3 class="text-4xl font-black leading-none blue-primary uppercase">RENGA<br>Jewelry</h3>
+                        <p class="text-gray-500 mt-6 font-semibold">E-commerce platform for a jewelry brand — from product vision to delivery.</p>
+                    </div>
+                    <i data-lucide="arrow-right" class="w-12 h-12 orange-primary group-hover:translate-x-4 transition-transform"></i>
+                </div>
+
+                <!-- Shopee Quick Compare -->
+                <div onclick="openCase('shopee')" class="project-card p-10 rounded-[3rem] cursor-pointer group bg-slate-50 flex flex-col justify-between min-h-[450px]">
+                    <div>
+                        <div class="w-16 h-2 blue-bg mb-8"></div>
+                        <h3 class="text-4xl font-black leading-none orange-primary uppercase">Shopee<br>Quick Compare</h3>
+                        <p class="text-gray-500 mt-6 font-semibold">Proposed and defined a new product comparison feature for Shopee's platform.</p>
+                    </div>
+                    <i data-lucide="arrow-right" class="w-12 h-12 blue-primary group-hover:translate-x-4 transition-transform"></i>
+                </div>
+
+                <!-- Competency Management -->
                 <div onclick="openCase('competency')" class="project-card p-10 rounded-[3rem] cursor-pointer group bg-slate-50 flex flex-col justify-between min-h-[450px]">
                     <div>
                         <div class="w-16 h-2 orange-bg mb-8"></div>
@@ -179,6 +195,8 @@
                     </div>
                     <i data-lucide="arrow-right" class="w-12 h-12 orange-primary group-hover:translate-x-4 transition-transform"></i>
                 </div>
+
+                <!-- MealMatch -->
                 <div onclick="openCase('mealmatch')" class="project-card p-10 rounded-[3rem] cursor-pointer group bg-slate-50 flex flex-col justify-between min-h-[450px]">
                     <div>
                         <div class="w-16 h-2 blue-bg mb-8"></div>
@@ -187,6 +205,8 @@
                     </div>
                     <i data-lucide="arrow-right" class="w-12 h-12 blue-primary group-hover:translate-x-4 transition-transform"></i>
                 </div>
+
+                <!-- Paper -->
                 <div onclick="openCase('paper')" class="project-card p-10 rounded-[3rem] cursor-pointer group bg-gray-900 flex flex-col justify-between min-h-[450px]">
                     <div>
                         <div class="w-16 h-2 orange-bg mb-8"></div>
@@ -195,6 +215,7 @@
                     </div>
                     <i data-lucide="book-open" class="w-12 h-12 text-blue-400 group-hover:rotate-12 transition-transform"></i>
                 </div>
+
             </div>
         </div>
     </section>
@@ -262,20 +283,15 @@
 
     <!-- CASE STUDY OVERLAY MODAL -->
     <div id="caseModal" class="case-overlay fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
-        <!-- Backdrop click to close -->
         <div class="absolute inset-0" onclick="closeCase()"></div>
-        <!-- Modal box -->
         <div class="case-box relative z-10">
-            <!-- Top bar -->
             <div class="shrink-0 px-8 md:px-12 py-5 border-b-4 border-blue-900 flex items-center justify-between">
                 <span id="caseRole" class="text-xs font-black uppercase tracking-[0.3em] text-gray-400"></span>
                 <button onclick="closeCase()" class="bg-blue-900 text-white rounded-full p-3 hover:rotate-90 transition-transform duration-300">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
-            <!-- Scrollable content -->
             <div class="flex-1 overflow-y-auto px-8 md:px-14 py-12" id="caseBody"></div>
-            <!-- Bottom bar -->
             <div class="shrink-0 px-8 md:px-12 py-5 border-t-4 border-blue-900 flex items-center justify-between">
                 <button onclick="closeCase()" class="flex items-center gap-2 text-sm font-black uppercase tracking-widest blue-primary hover:text-orange-500 transition-colors">
                     <i data-lucide="chevron-left" class="w-5 h-5"></i> Back to Projects
@@ -294,9 +310,56 @@
         lucide.createIcons();
 
         const projects = {
+            renga: {
+                title: "RENGA Jewelry E-commerce Platform",
+                role: "Project Manager",
+                overview: "Led a cross-functional team to build a full jewelry e-commerce website for RENGA. Responsible for bridging business goals and technical delivery — from initial product research through backlog management, UAT coordination, and final handoff.",
+                outcome: "Delivered a structured product backlog with clear acceptance criteria, validated through UAT. Aligned UI/UX and development teams around a shared product vision, reducing rework and scope creep throughout the build.",
+                deliverables: ["Feature List", "User Stories & Acceptance Criteria", "BPMN Process Diagrams", "Use Case Diagram", "Figma Prototypes", "UAT Coordination"],
+                workflow: "Product Research  →  Feature Definition  →  Backlog Prioritization  →  UI/UX Collaboration  →  UAT & Delivery",
+                workflowDetail: [
+                    "Product Research: Analyzed jewelry e-commerce market, user needs, and competitor platforms to define product scope.",
+                    "Feature Definition: Created Feature List, User Stories, and Acceptance Criteria aligned with business requirements.",
+                    "Backlog Prioritization: Managed and prioritized product backlog across sprints, balancing scope and delivery timelines.",
+                    "UI/UX Collaboration: Worked closely with designers and developers to ensure requirements were correctly interpreted and implemented.",
+                    "UAT & Delivery: Coordinated User Acceptance Testing, collected feedback, and confirmed business requirements were met before launch."
+                ],
+                visuals: [
+                    { src: "RENGA/BPMN_RENGA_1.png",   label: "BPMN Flow 1" },
+                    { src: "RENGA/BPMN_RENGA_2.png",   label: "BPMN Flow 2" },
+                    { src: "RENGA/DFD_RENGA.png",       label: "Data Flow Diagram" },
+                    { src: "RENGA/UCD_RENGA.png",       label: "Use Case Diagram" },
+                    { src: "RENGA/Figma_RENGA_1.png",   label: "Figma Screen 1" },
+                    { src: "RENGA/Figma_RENGA_2.png",   label: "Figma Screen 2" },
+                    { src: "RENGA/Figma_RENGA_3.png",   label: "Figma Screen 3" },
+                    { src: "RENGA/Figma_RENGA_4.png",   label: "Figma Screen 4" },
+                ]
+            },
+            shopee: {
+                title: "Quick Compare Table — Shopee Feature Proposal",
+                role: "Product Owner",
+                overview: "Conducted user and competitor research to identify pain points in Shopee's product comparison experience. Proposed the Quick Compare Table — a new feature enabling side-by-side product comparison directly within the platform — and led the full product definition process from problem statement to validated prototype.",
+                outcome: "Delivered a complete BRD, product backlog, and high-fidelity prototype. Validated the solution through UAT and presented a roadmap with measurable KPIs to track adoption and impact on conversion rate.",
+                deliverables: ["BRD (Business Requirements Document)", "Product Vision & Problem Statement", "Target User Personas", "Roadmap & KPIs", "User Stories & Product Backlog", "Figma Prototype", "UAT Validation"],
+                workflow: "User & Competitor Research  →  Problem Definition  →  Feature Scoping  →  BRD & Backlog  →  Prototype & UAT",
+                workflowDetail: [
+                    "User & Competitor Research: Surveyed users and benchmarked competitor platforms (Lazada, Tiki) to map pain points in product comparison.",
+                    "Problem Definition: Defined product vision, problem statement, and target user segments with supporting data.",
+                    "Feature Scoping: Outlined the Quick Compare Table feature scope, constraints, and prioritization logic.",
+                    "BRD & Backlog: Wrote detailed Business Requirements Document, user stories, acceptance criteria, and maintained the product backlog.",
+                    "Prototype & UAT: Collaborated with UI/UX to build Figma prototype; coordinated UAT to validate solution against requirements."
+                ],
+                visuals: [
+                    { src: "Shopee/Sitemap_Shopee.png",   label: "Sitemap" },
+                    { src: "Shopee/BPMN_Shopee.png",      label: "BPMN Flow" },
+                    { src: "Shopee/UCD_Shopee.png",        label: "Use Case Diagram" },
+                    { src: "Shopee/Figma_Shopee_1.png",   label: "Figma Screen 1" },
+                    { src: "Shopee/Figma_Shopee_2.png",   label: "Figma Screen 2" },
+                ]
+            },
             competency: {
                 title: "Competency Management & Resource Allocation System",
-                role: "Main Business Analyst / Project Manager",
+                role: "Business Analyst",
                 overview: "A system analysis and design project focused on helping project-based companies manage employee competencies and allocate resources more effectively. Addresses the lack of visibility into who knows what, and who's already overloaded.",
                 outcome: "Improved competency visibility and employee skill tracking. More effective resource allocation based on skills and workload. Early overload detection through monitoring and alerts.",
                 deliverables: ["Wireframes", "BPMN", "DFD", "UCD", "Sequence Diagrams"],
@@ -309,21 +372,24 @@
                     "Performance & Overload Monitoring: The system periodically monitors workload and sends alerts when overload risks are detected."
                 ],
                 visuals: [
-                    { src: "Figma_CM/Dashboard QLDA (D1).png",                           label: "Dashboard QLDA (D1)" },
-                    { src: "Figma_CM/Chi tiết dự án (D2).png",                           label: "Chi tiết dự án (D2)" },
-                    { src: "Figma_CM/Form tạo dự án (D3).png",                           label: "Form tạo dự án (D3)" },
-                    { src: "Figma_CM/Form yêu cầu phân bổ nguồn lực (D5).png",          label: "Form yêu cầu phân bổ (D5)" },
-                    { src: "Figma_CM/Danh sách yêu cầu phân bổ nguồn lực (D6).png",     label: "Yêu cầu phân bổ nguồn lực (D6)" },
-                    { src: "Figma_CM/Danh sách nhân viên cần đánh giá (D9).png",         label: "Nhân viên cần đánh giá (D9)" },
-                    { src: "Figma_CM/Đánh giá năng lực nhân viên (D10).png",             label: "Đánh giá năng lực (D10)" },
-                    { src: "Figma_CM/Thông tin danh mục và thang đo chi tiết (D11).png", label: "Danh mục & thang đo (D11)" },
-                    { src: "Figma_CM/Skill gap dự án (D12+D13).png",                     label: "Skill gap dự án (D12+D13)" },
-                    { src: "Figma_CM/Danh sách Hiring request (D14+D15).png",            label: "Hiring Request (D14+D15)" },
+                    { src: "CM/Dashboard QLDA (D1).png",                           label: "Dashboard QLDA (D1)" },
+                    { src: "CM/Chi tiết dự án (D2).png",                           label: "Chi tiết dự án (D2)" },
+                    { src: "CM/Form tạo dự án (D3).png",                           label: "Form tạo dự án (D3)" },
+                    { src: "CM/Form yêu cầu phân bổ nguồn lực (D5).png",          label: "Form yêu cầu phân bổ (D5)" },
+                    { src: "CM/Danh sách yêu cầu phân bổ nguồn lực (D6).png",     label: "Yêu cầu phân bổ nguồn lực (D6)" },
+                    { src: "CM/Danh sách nhân viên cần đánh giá (D9).png",         label: "Nhân viên cần đánh giá (D9)" },
+                    { src: "CM/Đánh giá năng lực nhân viên (D10).png",             label: "Đánh giá năng lực (D10)" },
+                    { src: "CM/Thông tin danh mục và thang đo chi tiết (D11).png", label: "Danh mục & thang đo (D11)" },
+                    { src: "CM/Skill gap dự án (D12+D13).png",                     label: "Skill gap dự án (D12+D13)" },
+                    { src: "CM/Danh sách Hiring request (D14+D15).png",            label: "Hiring Request (D14+D15)" },
+                    { src: "CM/BPMN_CM.png",                                        label: "Quy trình phân bổ nguồn lực" },
+                    { src: "CM/DFD_CM.png",                                         label: "Data Flow Diagram" },
+                    { src: "CM/UCD_CM.png",                                         label: "Use Case Diagram" },
                 ]
             },
             mealmatch: {
                 title: "MealMatch - Personal Food Journal & Restaurant Discovery App",
-                role: "Product Manager / Business Analyst",
+                role: "Product Manager",
                 overview: "A local restaurant and food discovery app where users can explore nearby places, log personal dining experiences, and get recommendations based on their own history. The core system supports full CRUD operations on restaurants, food items, and user reviews.",
                 outcome: "Validated product-market fit through persona mapping and agile iterations. High-fidelity prototype with smooth UX flows.",
                 deliverables: ["Product Vision & Backlog", "Agile/Scrum Roadmap", "User Flows & Navigation Map", "Hi-fi Figma Prototypes", "BPMN Process Modeling"],
@@ -335,12 +401,12 @@
                     "Receive Personalized Recommendations: System suggests restaurants and foods based on past reviews, logged meals, and stated preferences."
                 ],
                 visuals: [
-                    { src: "MealMatch1.png",   label: "MealMatch Screen 1" },
-                    { src: "MealMatch2.png",   label: "MealMatch Screen 2" },
-                    { src: "MealMatch3.png",   label: "MealMatch Screen 3" },
-                    { src: "BPMN_MM_1.png",    label: "BPMN Flow 1" },
-                    { src: "BPMN_MM_2.png",    label: "BPMN Flow 2" },
-                    { src: "BPMN_MM_3.png",    label: "BPMN Flow 3" },
+                    { src: "MM/MealMatch1.png",   label: "MealMatch Screen 1" },
+                    { src: "MM/MealMatch2.png",   label: "MealMatch Screen 2" },
+                    { src: "MM/MealMatch3.png",   label: "MealMatch Screen 3" },
+                    { src: "MM/BPMN_MM_1.png",    label: "BPMN Flow 1" },
+                    { src: "MM/BPMN_MM_2.png",    label: "BPMN Flow 2" },
+                    { src: "MM/BPMN_MM_3.png",    label: "BPMN Flow 3" },
                 ]
             },
             paper: {
@@ -354,7 +420,6 @@
             }
         };
 
-        /* ---- Drag scroll ---- */
         function initDragScroll(el) {
             if (!el) return;
             let isDown = false, startX, scrollLeft, moved = false;
@@ -368,11 +433,9 @@
                 if (!isDown) return; e.preventDefault(); moved = true;
                 el.scrollLeft = scrollLeft - (e.pageX - el.offsetLeft - startX) * 1.2;
             });
-            // prevent click-to-lightbox when dragging
             el.addEventListener('click', e => { if (moved) e.stopPropagation(); }, true);
         }
 
-        /* ---- Dot sync ---- */
         function initDots(trackEl, dotsEl, count) {
             if (!trackEl || !dotsEl) return;
             const dots = dotsEl.querySelectorAll('.slider-dot');
@@ -388,7 +451,6 @@
             update();
         }
 
-        /* ---- Open case ---- */
         function openCase(id) {
             const p = projects[id];
             document.getElementById('caseRole').textContent = p.role || 'Research';
@@ -406,7 +468,7 @@
             ` : `
                 <div class="space-y-8">
                     <div>
-                        <p class="text-xs font-black orange-primary uppercase tracking-[0.3em] mb-5">Key BA Deliverables</p>
+                        <p class="text-xs font-black orange-primary uppercase tracking-[0.3em] mb-5">Key Deliverables</p>
                         <ul class="space-y-3">
                             ${p.deliverables.map(item => `
                                 <li class="flex items-center gap-3 text-lg font-extrabold blue-primary">
@@ -466,13 +528,11 @@
             document.body.style.overflow = 'hidden';
             lucide.createIcons();
 
-            // Click on slide = lightbox (only if not dragging)
             const track = document.getElementById(`slider-${id}`);
             if (track) {
                 track.querySelectorAll('.img-slide').forEach(slide => {
                     slide.addEventListener('click', () => openLight(slide.dataset.src));
                 });
-                // Init drag and dots AFTER the modal is visible (next frame)
                 setTimeout(() => {
                     initDragScroll(track);
                     initDots(track, document.getElementById(`dots-${id}`), p.visuals.length);
