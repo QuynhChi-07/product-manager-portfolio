@@ -6,6 +6,7 @@
     <title>Nguyen Ngoc Quynh Chi | Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #ffffff; color: #001D3D; }
@@ -107,6 +108,45 @@
             transition: transform 0.3s, border-color 0.3s;
         }
         .award-thumb:hover { transform: scale(1.1); border-color: #FF6B00; }
+
+        .pdf-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: #FF6B00; color: #fff;
+            font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em;
+            text-transform: uppercase; font-style: italic;
+            padding: 10px 20px; border-radius: 999px; border: none; cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .pdf-btn:hover { background: #003566; transform: scale(1.05); }
+        .pdf-btn svg { width: 16px; height: 16px; }
+
+        .pdf-float {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+            display: flex; align-items: center; gap: 8px;
+            background: #003566; color: #fff;
+            font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em;
+            text-transform: uppercase; font-style: italic;
+            padding: 14px 22px; border-radius: 999px; border: none; cursor: pointer;
+            box-shadow: 0 8px 32px rgba(0,53,102,0.35);
+            transition: background 0.2s, transform 0.2s;
+        }
+        .pdf-float:hover { background: #FF6B00; transform: translateY(-3px); }
+        .pdf-float svg { width: 18px; height: 18px; }
+
+        /* PDF loading overlay */
+        #pdfOverlay {
+            display: none; position: fixed; inset: 0; z-index: 9000;
+            background: rgba(0,21,61,0.7); backdrop-filter: blur(8px);
+            align-items: center; justify-content: center; flex-direction: column; gap: 20px;
+        }
+        #pdfOverlay.show { display: flex; }
+        #pdfOverlay p { color: #fff; font-weight: 800; font-size: 1.1rem; letter-spacing: 0.05em; }
+        .pdf-spinner {
+            width: 48px; height: 48px; border: 5px solid rgba(255,107,0,0.3);
+            border-top-color: #FF6B00; border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="overflow-x-hidden">
@@ -115,12 +155,16 @@
     <nav class="w-full py-10 px-6 md:px-16 flex flex-col md:flex-row justify-between items-start md:items-center border-b-4 border-blue-900">
         <div class="mb-6 md:mb-0">
             <h1 class="text-3xl font-black tracking-tighter blue-primary">QUYNH CHI<span class="orange-primary">.</span></h1>
-            <p class="text-sm font-bold uppercase tracking-[0.3em] orange-primary">Product Owner Intern</p>
+            <p class="text-sm font-bold uppercase tracking-[0.3em] orange-primary">Product Intern</p>
         </div>
         <div class="flex flex-col md:flex-row gap-6 md:gap-12 text-sm font-extrabold uppercase tracking-widest italic">
             <a href="https://www.linkedin.com/in/chinnq-733395337/" target="_blank" class="contact-item">LinkedIn</a>
             <a href="mailto:qchinguyen.work@gmail.com" class="contact-item">qchinguyen.work@gmail.com</a>
             <a href="tel:+84937307549" class="contact-item">+84 937 307 549</a>
+            <button class="pdf-btn" onclick="exportPDF()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                Export PDF
+            </button>
         </div>
     </nav>
 
@@ -130,7 +174,7 @@
             <div class="lg:col-span-8">
                 <h2 class="text-huge blue-primary uppercase">About<span class="orange-primary italic">.</span></h2>
                 <p class="mt-10 text-xl md:text-2xl font-semibold leading-relaxed text-gray-700">
-                    I'm a <span class="orange-primary font-extrabold">Digital Business & AI</span> student at UEL, specializing in Product Owner. I work at the intersection of technology and business, translating complex requirements into structured systems, modeling processes, and turning data into decisions that actually move things forward.
+                    I'm a <span class="orange-primary font-extrabold">Digital Business & AI</span> student at UEL, building toward a career in Product Management. I work at the intersection of technology and business — turning user research and data into clear product specs, shipping prototypes, and collaborating with cross-functional teams to move things from idea to delivery.
                 </p>
             </div>
             <div class="lg:col-span-4">
@@ -171,7 +215,7 @@
                     <div>
                         <div class="w-16 h-2 orange-bg mb-8"></div>
                         <h3 class="text-4xl font-black leading-none blue-primary uppercase">RENGA<br>Jewelry</h3>
-                        <p class="text-gray-500 mt-6 font-semibold">E-commerce platform for a jewelry brand — from product vision to delivery.</p>
+                        <p class="text-gray-500 mt-6 font-semibold">Led end-to-end product delivery for a jewelry e-commerce platform — from research and specs to launch.</p>
                     </div>
                     <i data-lucide="arrow-right" class="w-12 h-12 orange-primary group-hover:translate-x-4 transition-transform"></i>
                 </div>
@@ -181,7 +225,7 @@
                     <div>
                         <div class="w-16 h-2 blue-bg mb-8"></div>
                         <h3 class="text-4xl font-black leading-none orange-primary uppercase">Shopee<br>Quick Compare</h3>
-                        <p class="text-gray-500 mt-6 font-semibold">Proposed and defined a new product comparison feature for Shopee's platform.</p>
+                        <p class="text-gray-500 mt-6 font-semibold">Identified a user pain point, proposed a new feature, and defined the full product roadmap for Shopee.</p>
                     </div>
                     <i data-lucide="arrow-right" class="w-12 h-12 blue-primary group-hover:translate-x-4 transition-transform"></i>
                 </div>
@@ -191,7 +235,7 @@
                     <div>
                         <div class="w-16 h-2 orange-bg mb-8"></div>
                         <h3 class="text-4xl font-black leading-none blue-primary uppercase">Competency<br>Management</h3>
-                        <p class="text-gray-500 mt-6 font-semibold">Transforming HR resource allocation through data modeling.</p>
+                        <p class="text-gray-500 mt-6 font-semibold">Translated complex HR workflows into a structured system design with interactive prototype.</p>
                     </div>
                     <i data-lucide="arrow-right" class="w-12 h-12 orange-primary group-hover:translate-x-4 transition-transform"></i>
                 </div>
@@ -201,7 +245,7 @@
                     <div>
                         <div class="w-16 h-2 blue-bg mb-8"></div>
                         <h3 class="text-4xl font-black leading-none orange-primary uppercase">MealMatch<br>App</h3>
-                        <p class="text-gray-500 mt-6 font-semibold">Product planning for a personalized restaurant discovery experience.</p>
+                        <p class="text-gray-500 mt-6 font-semibold">Defined product vision, roadmap, and UX flows for a personalized restaurant discovery app.</p>
                     </div>
                     <i data-lucide="arrow-right" class="w-12 h-12 blue-primary group-hover:translate-x-4 transition-transform"></i>
                 </div>
@@ -312,7 +356,7 @@
         const projects = {
             renga: {
                 title: "RENGA Jewelry E-commerce Platform",
-                role: "Project Manager",
+                role: "Project Manager & Product Owner",
                 overview: "Led a cross-functional team to build a full jewelry e-commerce website for RENGA. Responsible for bridging business goals and technical delivery — from initial product research through backlog management, UAT coordination, and final handoff.",
                 outcome: "Delivered a structured product backlog with clear acceptance criteria, validated through UAT. Aligned UI/UX and development teams around a shared product vision, reducing rework and scope creep throughout the build.",
                 deliverables: ["Feature List", "User Stories & Acceptance Criteria", "BPMN Process Diagrams", "Use Case Diagram", "Figma Prototypes", "UAT Coordination"],
@@ -337,7 +381,7 @@
             },
             shopee: {
                 title: "Quick Compare Table — Shopee Feature Proposal",
-                role: "Product Owner",
+                role: "Product Intern",
                 overview: "Conducted user and competitor research to identify pain points in Shopee's product comparison experience. Proposed the Quick Compare Table — a new feature enabling side-by-side product comparison directly within the platform — and led the full product definition process from problem statement to validated prototype.",
                 outcome: "Delivered a complete BRD, product backlog, and high-fidelity prototype. Validated the solution through UAT and presented a roadmap with measurable KPIs to track adoption and impact on conversion rate.",
                 deliverables: ["BRD (Business Requirements Document)", "Product Vision & Problem Statement", "Target User Personas", "Roadmap & KPIs", "User Stories & Product Backlog", "Figma Prototype", "UAT Validation"],
@@ -416,7 +460,7 @@
                 outcome: "Random Forest model outperformed linear baselines. High stability and accuracy in predictive analysis. SHAP values reveal which competitive factors drive price movements most, giving analysts a clear, explainable view of market dynamics.",
                 venue: "International Conference on Computer and Automation Engineering (ICCAE) 2026",
                 status: "Accepted Paper",
-                ba_value: "Builds real market intelligence skills: understanding how competition influences price, where price floors and ceilings apply, and how prior price periods carry forward. Turns raw data into pricing strategy, a core BA skill for retail and e-commerce domains."
+                ba_value: "Builds real market intelligence skills — understanding how competition influences pricing, where price floors and ceilings apply, and how to turn raw data into a product or pricing strategy. Directly applicable to e-commerce and marketplace product decisions."
             }
         };
 
@@ -461,7 +505,7 @@
                     <p class="text-xl font-black italic mb-3">${p.venue}</p>
                     <p class="text-sm font-bold text-blue-300 uppercase tracking-widest">${p.status}</p>
                     <div class="mt-8 pt-8 border-t border-blue-700">
-                        <p class="text-xs font-black text-orange-400 uppercase tracking-[0.3em] mb-4">BA Relevance</p>
+                        <p class="text-xs font-black text-orange-400 uppercase tracking-[0.3em] mb-4">Product Relevance</p>
                         <p class="text-base font-medium leading-relaxed">${p.ba_value}</p>
                     </div>
                 </div>
@@ -556,6 +600,210 @@
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') { closeCase(); closeLight(); }
         });
+
+        async function exportPDF() {
+            document.getElementById('pdfOverlay').classList.add('show');
+            await new Promise(r => setTimeout(r, 80));
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+            const W = 210, H = 297;
+            const BLUE = [0, 53, 102], ORANGE = [255, 107, 0], DARK = [26, 26, 26], GRAY = [100, 100, 100], LGRAY = [180, 180, 180];
+            let y = 0;
+
+            function newPage() { doc.addPage(); y = 0; }
+            function checkY(need = 10) { if (y + need > H - 10) newPage(); }
+
+            function setFont(style = 'normal', size = 10, color = DARK) {
+                doc.setFont('helvetica', style);
+                doc.setFontSize(size);
+                doc.setTextColor(...color);
+            }
+
+            function text(str, x, yPos, opts = {}) {
+                doc.text(str, x, yPos, opts);
+            }
+
+            function sectionLine(label) {
+                checkY(14);
+                y += 8;
+                setFont('bold', 9, ORANGE);
+                text(label.toUpperCase(), 14, y);
+                doc.setDrawColor(...ORANGE);
+                doc.setLineWidth(0.8);
+                doc.line(14, y + 2, W - 14, y + 2);
+                y += 8;
+            }
+
+            function bulletLine(str, indent = 18) {
+                const maxW = W - indent - 14;
+                setFont('normal', 9, DARK);
+                const lines = doc.splitTextToSize('• ' + str, maxW);
+                lines.forEach(line => {
+                    checkY(6);
+                    text(line, indent, y);
+                    y += 5;
+                });
+                y += 1;
+            }
+
+            function para(str, indent = 14, bold = false, color = DARK, size = 9) {
+                setFont(bold ? 'bold' : 'normal', size, color);
+                const lines = doc.splitTextToSize(str, W - indent - 14);
+                lines.forEach(line => {
+                    checkY(6);
+                    text(line, indent, y);
+                    y += 5;
+                });
+            }
+
+            // ── HEADER ──────────────────────────────────────────────
+            doc.setFillColor(...BLUE);
+            doc.rect(0, 0, W, 38, 'F');
+
+            doc.setFillColor(...ORANGE);
+            doc.rect(0, 34, W, 4, 'F');
+
+            setFont('bold', 24, [255,255,255]);
+            text('NGUYEN NGOC QUYNH CHI', 14, 18);
+
+            setFont('bold', 9, ORANGE);
+            text('PRODUCT INTERN', 14, 27);
+
+            setFont('normal', 8, [200,215,235]);
+            text('qchinguyen.work@gmail.com  •  +84 937 307 549  •  LinkedIn  •  Portfolio  •  Ho Chi Minh City, Vietnam', 14, 34);
+
+            y = 46;
+
+            // ── ABOUT ───────────────────────────────────────────────
+            sectionLine('About');
+            para("Digital Business & AI student at UEL, building toward a career in Product Management. I work at the intersection of technology and business — turning user research and data into clear product specs, shipping prototypes, and collaborating with cross-functional teams to move things from idea to delivery.", 14);
+
+            // ── EDUCATION ───────────────────────────────────────────
+            y += 2;
+            sectionLine('Education');
+            setFont('bold', 10, BLUE);
+            checkY(6); text('University of Economics and Law, VNU-HCM', 14, y); y += 5;
+            setFont('normal', 9, DARK);
+            checkY(6); text('Bachelor of Digital Business and Artificial Intelligence  |  2023 – 2027', 14, y); y += 5;
+            setFont('bold', 9, ORANGE);
+            checkY(6); text('GPA: 8.99 / 10', 14, y); y += 6;
+
+            // ── PROJECTS ────────────────────────────────────────────
+            y += 2;
+            sectionLine('Projects & Publications');
+
+            const pids = ['renga', 'shopee', 'competency', 'mealmatch', 'paper'];
+            pids.forEach(id => {
+                const p = projects[id];
+                checkY(18);
+
+                // Project title bar
+                doc.setFillColor(...BLUE);
+                doc.roundedRect(14, y, W - 28, 8, 1, 1, 'F');
+                setFont('bold', 10, [255,255,255]);
+                text(p.title, 18, y + 5.5);
+                setFont('bold', 8, ORANGE);
+                doc.setTextColor(...ORANGE);
+                doc.text(p.role || 'Research', W - 16, y + 5.5, { align: 'right' });
+                y += 12;
+
+                // Overview
+                setFont('bold', 8, ORANGE);
+                checkY(5); text('OVERVIEW', 14, y); y += 5;
+                para(p.overview, 14);
+
+                // Outcome
+                y += 1;
+                setFont('bold', 8, ORANGE);
+                checkY(5); text('OUTCOMES & VALUE', 14, y); y += 5;
+                para(p.outcome, 14);
+
+                if (id === 'paper') {
+                    y += 1;
+                    setFont('bold', 8, ORANGE);
+                    checkY(5); text('VENUE', 14, y); y += 5;
+                    para(p.venue + '  —  ' + p.status, 14);
+                    y += 1;
+                    setFont('bold', 8, ORANGE);
+                    checkY(5); text('PRODUCT RELEVANCE', 14, y); y += 5;
+                    para(p.ba_value, 14);
+                } else {
+                    // Deliverables
+                    y += 1;
+                    setFont('bold', 8, ORANGE);
+                    checkY(5); text('KEY DELIVERABLES', 14, y); y += 5;
+                    p.deliverables.forEach(d => bulletLine(d));
+
+                    // Workflow
+                    y += 1;
+                    setFont('bold', 8, ORANGE);
+                    checkY(5); text('WORKFLOW', 14, y); y += 5;
+                    setFont('bold', 8, BLUE);
+                    const wlines = doc.splitTextToSize(p.workflow, W - 28);
+                    wlines.forEach(line => { checkY(5); text(line, 14, y); y += 4.5; });
+                    y += 1;
+                    p.workflowDetail.forEach(s => bulletLine(s));
+                }
+
+                // Separator
+                y += 4;
+                doc.setDrawColor(...LGRAY);
+                doc.setLineWidth(0.3);
+                checkY(4);
+                doc.line(14, y, W - 14, y);
+                y += 6;
+            });
+
+            // ── ACHIEVEMENTS ─────────────────────────────────────────
+            checkY(20);
+            sectionLine('Achievements & Certifications');
+
+            const achievements = [
+                { num: '01', title: 'Top 10 — AI in Business Season 2 (AiB2), 2025', desc: 'Built a production-ready AI Agent for Marketing & E-commerce using NocoAI — demonstrating ability to ship AI-powered solutions without engineering dependencies.' },
+                { num: '02', title: 'Top 10 — Attacker Competition, 2025', desc: 'Tech startup idea competition across AI, Blockchain, FinTech, and Tech Ethics. Co-organized by UEL, IDG, and HIDS.' },
+                { num: '03', title: 'Top 12 — H4TF Product Management, 2026', desc: 'Product analysis and strategy formulation for SAPO platform and GreenNode through market research, user problem identification, solution ideation.' },
+            ];
+            achievements.forEach(a => {
+                checkY(14);
+                setFont('bold', 11, ORANGE); text(a.num + '.', 14, y);
+                setFont('bold', 9, BLUE); text(a.title, 24, y); y += 5;
+                para(a.desc, 24);
+                y += 3;
+            });
+
+            y += 2;
+            setFont('bold', 9, ORANGE);
+            checkY(6); text('CERTIFICATIONS', 14, y); y += 5;
+            ['Google Data Analytics Professional Certificate', 'Google Digital Marketing & E-commerce Professional Certificate', 'SAP S/4HANA for Beginners — Udemy'].forEach(c => bulletLine(c));
+
+            // ── FOOTER ──────────────────────────────────────────────
+            const pageCount = doc.getNumberOfPages();
+            for (let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.setFillColor(...BLUE);
+                doc.rect(0, H - 10, W, 10, 'F');
+                setFont('normal', 7, [180, 200, 220]);
+                text('Nguyen Ngoc Quynh Chi  •  Product Intern Portfolio', 14, H - 4);
+                text(`${i} / ${pageCount}`, W - 14, H - 4, { align: 'right' });
+            }
+
+            doc.save('Nguyen_Ngoc_Quynh_Chi_Portfolio.pdf');
+            document.getElementById('pdfOverlay').classList.remove('show');
+        }
     </script>
+    <!-- PDF LOADING OVERLAY -->
+    <div id="pdfOverlay">
+        <div class="pdf-spinner"></div>
+        <p>Generating your portfolio PDF...</p>
+    </div>
+
+    <!-- FLOATING PDF BUTTON -->
+    <button class="pdf-float" onclick="exportPDF()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+        Export PDF
+    </button>
+
 </body>
 </html>
